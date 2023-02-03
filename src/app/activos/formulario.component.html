@@ -1,0 +1,192 @@
+<div class="card mb-5 mb-xl-12">
+  <!--begin::Header-->
+  <div class="card-header border-0 pt-5">
+      <h3 class="card-title align-items-start flex-column">
+          <span class="card-label fw-bold fs-3 mb-1">Formulario de Activo fijo</span>
+          <!-- <span class="text-muted mt-1 fw-semibold fs-7">Over 500 new products</span> -->
+      </h3>
+      <div class="card-toolbar">
+      </div>
+  </div>
+  <!--end::Header-->
+  <!--begin::Body-->
+  <div class="card-body py-3">
+      <!--begin::Table container-->
+      <form (ngSubmit)="create()">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="nombre">Nombre del Item</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.nombre" name="nombre">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.descripcion" name="descripcion">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="descripcion">Grupo</label>
+              <select [compareWith]="compararGrupo" class="form-control" [(ngModel)]="activo.grupo" name="grupo">
+                <!-- <option [ngValue]="grupo.id" *ngFor="let grupo of grupos">{{ activo.grupo.descripcion }}</option> -->
+                <option [ngValue]="undefined">Seleccione el Grupo</option>
+                <option [ngValue]="grupo" *ngFor="let grupo of grupos">{{ grupo.descripcion }}</option>
+              </select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="activo.grupo" name="grupo"> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Codigo</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.codigo_item" name="codigo_item">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Departamento</label>
+              <select [(ngModel)]="activo.departameto" name="departameto" class="form-control">
+                <option selected value="La Paz">La Paz</option>
+                <option value="Oruro">Oruro</option>
+                <option value="Potosi">Potosi</option>
+                <option value="Cochobamba">Cochobamba</option>
+                <option value="Chuquisaca">Chuquisaca</option>
+                <option value="Tarija">Tarija</option>
+                <option value="Pando">Pando</option>
+                <option value="Beni">Beni</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+              </select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="activo.departameto" name="departameto"> -->
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Regional</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.regional" name="regional">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Fecha de combra</label>
+              <input type="date" class="form-control" [(ngModel)]="activo.fecha_compra" name="fecha_compra">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">UFV de Incio</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.ufv_inicio" name="ufv_inicio">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">% de depreciacion</label>
+              <input type="number" class="form-control" [(ngModel)]="activo.porcentaje_depreciacion" name="porcentaje_depreciacion">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Vida util</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.vida_util" name="vida_util">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Rubro</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.rubro" name="rubro">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo de cuenta</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_cuenta" name="tipo_cuenta">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo de incorporacion</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_incorporacion" name="tipo_incorporacion">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo de regimen</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_regimen" name="tipo_regimen">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo Modelo</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_modelo" name="tipo_modelo">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo de Marca</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_marca" name="tipo_marca">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tipo de activo</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.tipo_activo" name="tipo_activo">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Numero de serie</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.numero_serie" name="numero_serie">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">UFV de compra</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.ufv_compra" name="ufv_compra">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="codigo">Ubicacion General</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.ubicacion_general" name="ubicacion_general">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="codigo">Ubicacion Especifica</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.ubicacion_especifica" name="ubicacion_especifica">
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-md-6">
+            <button class="btn btn-primary w-100 btn-success" role="button">Guardar</button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-primary w-100 btn-dark" type="button" routerLink="/activos">Volver</button>
+          </div>
+        </div>
+      </form>
+      <!--end::Table container-->
+  </div>
+  <!--begin::Body-->
+</div>
+
+
+
+
