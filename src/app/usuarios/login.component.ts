@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
- public titulo:string = "haber el logeo";
+ public titulo:string = "haber el logeo que es eso che";
 
 }
