@@ -18,7 +18,7 @@ import { ActivosComponent } from './activos/activos.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormularioComponent } from './activos/formulario.component';
 // import { LoginComponent } from './login/login.component';
-import { DepartamentosComponent } from './departamentos/departamentos.component';
+// import { DepartamentosComponent } from './departamentos/departamentos.component';
 import { GruposComponent } from './grupos/grupos.component';
 import { FormularioGrupoComponent } from './grupos/formulario-grupo.component';
 
@@ -29,6 +29,16 @@ import { Routes, RouterModule } from '@angular/router';
 // FORMULARIOS
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './usuarios/login.component';
+import { IncorporacionComponent } from './incorporacion/incorporacion.component';
+import { RegimenComponent } from './regimen/regimen.component';
+import { RegionalComponent } from './regional/regional.component';
+import { DepartamentoComponent } from './departamento/departamento.component';
+import { UnidadManejoComponent } from './unidad-manejo/unidad-manejo.component';
+import { TipoTransaccionComponent } from './tipo-transaccion/tipo-transaccion.component';
+import { UbicacionEspecificaComponent } from './ubicacion-especifica/ubicacion-especifica.component';
+import { SubGrupoComponent } from './sub-grupo/sub-grupo.component';
+import { ComponenteComponent } from './componente/componente.component';
+import { ViewComponent } from './activos/view.component';
 
 const routes: Routes = [
   // ACTIVOS
@@ -39,7 +49,8 @@ const routes: Routes = [
   {path: 'activos', component:ActivosComponent},
   {path: 'activos/formulario', component:FormularioComponent},
   {path: 'activos/formulario/:id', component:FormularioComponent},
-  {path: 'departamentos', component:DepartamentosComponent},
+  {path: 'activos/view/:id', component:ViewComponent},
+  // {path: 'departamentos', component:DepartamentosComponent},
 
   // GRUPOS
   {path: 'grupos', component:GruposComponent},
@@ -58,9 +69,19 @@ const routes: Routes = [
     ActivosComponent,
     FormularioComponent,
     LoginComponent,
-    DepartamentosComponent,
+    // DepartamentosComponent,
     GruposComponent,
     FormularioGrupoComponent,
+    IncorporacionComponent,
+    RegimenComponent,
+    RegionalComponent,
+    DepartamentoComponent,
+    UnidadManejoComponent,
+    TipoTransaccionComponent,
+    UbicacionEspecificaComponent,
+    SubGrupoComponent,
+    ComponenteComponent,
+    ViewComponent,
     // LoginComponent
   ],
   imports: [

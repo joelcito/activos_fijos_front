@@ -14,27 +14,54 @@
       <!--begin::Table container-->
       <form (ngSubmit)="create()">
         <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="nombre">Nombre del Item</label>
-              <input type="text" class="form-control" [(ngModel)]="activo.nombre" name="nombre">
-            </div>
-          </div>
-          <div class="col-md-4">
+
+          <div class="col-md-3">
+            <!-- <div class="form-group">
+              <label for="descripcion">id</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.idactivo" name="idactivo">
+            </div> -->
             <div class="form-group">
               <label for="descripcion">Descripcion</label>
               <input type="text" class="form-control" [(ngModel)]="activo.descripcion" name="descripcion">
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="descripcion">Incorporacion</label>
+              <select [compareWith]="compararIncorporacion" class="form-control" [(ngModel)]="activo.incorporacion" name="incorporacion">
+                <option [ngValue]="undefined">Seleccione el Grupo</option>
+                <option [ngValue]="incorporacion" *ngFor="let incorporacion of incorporaciones">{{ incorporacion.nombre }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
             <div class="form-group">
               <label for="descripcion">Grupo</label>
-              <select [compareWith]="compararGrupo" class="form-control" [(ngModel)]="activo.grupo" name="grupo">
-                <!-- <option [ngValue]="grupo.id" *ngFor="let grupo of grupos">{{ activo.grupo.descripcion }}</option> -->
+              <select [compareWith]="compararGrupo" class="form-control" [(ngModel)]="activo.grupo" name="grupo" (change)="buscarSubGrupo($event)">
                 <option [ngValue]="undefined">Seleccione el Grupo</option>
                 <option [ngValue]="grupo" *ngFor="let grupo of grupos">{{ grupo.descripcion }}</option>
               </select>
-              <!-- <input type="text" class="form-control" [(ngModel)]="activo.grupo" name="grupo"> -->
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="descripcion">Sub Grupo</label>
+              <!-- <select [compareWith]="compararSubGrupo" class="form-control" [(ngModel)]="activo.subgrupo" name="subgrupo" (change)="cargaGrupo($event)">
+                <option [ngValue]="undefined">Seleccione el Grupo</option>
+                <option [ngValue]="subgrupo" *ngFor="let subgrupo of subgrupos">{{ subgrupo.descripcion }}</option>
+              </select> -->
+              <select [compareWith]="compararSubGrupo" class="form-control" [(ngModel)]="activo.subgrupo" name="subgrupo" (change)="cargaComponente($event)">
+                <option [ngValue]="undefined">Seleccione el Grupo</option>
+                <option [ngValue]="subgrupo" *ngFor="let subgrupo of subGruposBuscados">{{ subgrupo.descripcion }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="estadoComponente">
+          <div class="col" *ngFor="let componente of componenteByIdSubgrupo">
+            <div class="form-group">
+              <label for="descripcion">{{ componente.nombre }}</label>
+              <input type="text" class="form-control" [(ngModel)]="componente.estado" name="{{ componente.estado }}[]">
             </div>
           </div>
         </div>
@@ -43,41 +70,118 @@
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">Codigo</label>
-              <input type="text" class="form-control" [(ngModel)]="activo.codigo_item" name="codigo_item">
+              <input type="text" class="form-control" [(ngModel)]="activo.codigo" name="codigo">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="codigo">Departamento</label>
-              <select [(ngModel)]="activo.departameto" name="departameto" class="form-control">
-                <option selected value="La Paz">La Paz</option>
-                <option value="Oruro">Oruro</option>
-                <option value="Potosi">Potosi</option>
-                <option value="Cochobamba">Cochobamba</option>
-                <option value="Chuquisaca">Chuquisaca</option>
-                <option value="Tarija">Tarija</option>
-                <option value="Pando">Pando</option>
-                <option value="Beni">Beni</option>
-                <option value="Santa Cruz">Santa Cruz</option>
+              <label for="codigo">Regimen</label>
+              <select class="form-control" [(ngModel)]="activo.regimen" name="regimen">
+                <option [ngValue]="undefined">Seleccione el Regimen</option>
+                <option [ngValue]="regimen" *ngFor="let regimen of regimenes">{{ regimen.nombre }}</option>
               </select>
-              <!-- <input type="text" class="form-control" [(ngModel)]="activo.departameto" name="departameto"> -->
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">Regional</label>
-              <input type="text" class="form-control" [(ngModel)]="activo.regional" name="regional">
+              <select class="form-control" [(ngModel)]="activo.regional" name="regional">
+                <option [ngValue]="undefined">Seleccione el Regimen</option>
+                <option [ngValue]="regional" *ngFor="let regional of regionales">{{ regional.nombre }}</option>
+              </select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="activo.regional" name="regional"> -->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Unidad de Manejo</label>
+              <select class="form-control"  [(ngModel)]="activo.unidadmanejo" name="unidadmanejo">
+                <option [ngValue]="undefined">Seleccione la unidad</option>
+                <option [ngValue]="unidamanejo" *ngFor="let unidamanejo of unidadesManejo">{{ unidamanejo.descripcion }}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <!-- <div class="form-group">
+              <label for="codigo">Ubicacion Especifica</label>
+              <select class="form-control">
+                <option [ngValue]="undefined">Seleccione la unidad</option>
+                <option [ngValue]="unidamanejo" *ngFor="let unidamanejo of unidadesManejo">{{ unidamanejo.descripcion }}</option>
+              </select>
+            </div> -->
+            <div class="form-group">
+              <label for="codigo">Placa</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.placa" name="placa">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label for="codigo">Fecha de combra</label>
-              <input type="date" class="form-control" [(ngModel)]="activo.fecha_compra" name="fecha_compra">
+              <label for="codigo">Eficiencia</label>
+              <select class="form-control"  [(ngModel)]="activo.eficiencia" name="eficiencia">
+                <option [ngValue]="undefined">Seleccione la unidad</option>
+                <option value="Nuevo">Nuevo</option>
+                <option value="Bueno">Bueno</option>
+                <option value="Regular">Regular</option>
+                <option value="Malo">Malo</option>
+                <option value="Para Baja">Para Baja</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Forma inicial</label>
+              <select class="form-control" [(ngModel)]="activo.formainicial" name="formainicial">
+                <option [ngValue]="undefined">Seleccione</option>
+                <option value="Nuevo">Inc. Transferencia</option>
+                <option value="Bueno">Incorporado</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Estado de registro</label>
+              <select class="form-control"  [(ngModel)]="activo.estadoregistro" name="estadoregistro">
+                <option [ngValue]="undefined">Seleccione</option>
+                <option value="Nuevo">Anulado</option>
+                <option value="Bueno">Aprobado</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <div class="row mt-3">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Fecha de combra</label>
+              <input type="date" class="form-control" [(ngModel)]="activo.fechacompra" name="fechacompra">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">UFV de compra</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.ufv" name="ufv">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Tasa de depreciacion</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.porcentaje_depreciacion" name="porcentaje_depreciacion">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="codigo">Vida util (meses)</label>
+              <input type="text" class="form-control" [(ngModel)]="activo.vida_util" name="vida_util">
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row mt-3">
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">UFV de Incio</label>
@@ -102,9 +206,9 @@
               <input type="text" class="form-control" [(ngModel)]="activo.rubro" name="rubro">
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">Tipo de cuenta</label>
@@ -129,9 +233,9 @@
               <input type="text" class="form-control" [(ngModel)]="activo.tipo_modelo" name="tipo_modelo">
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">Tipo de Marca</label>
@@ -153,12 +257,12 @@
           <div class="col-md-3">
             <div class="form-group">
               <label for="codigo">UFV de compra</label>
-              <input type="text" class="form-control" [(ngModel)]="activo.ufv_compra" name="ufv_compra">
+              <input type="text" class="form-control" [(ngModel)]="activo.ufvcompra" name="ufv_compra">
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
           <div class="col-md-6">
             <div class="form-group">
               <label for="codigo">Ubicacion General</label>
@@ -171,7 +275,7 @@
               <input type="text" class="form-control" [(ngModel)]="activo.ubicacion_especifica" name="ubicacion_especifica">
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row mt-5">
           <div class="col-md-6">

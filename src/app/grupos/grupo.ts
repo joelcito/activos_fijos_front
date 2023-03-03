@@ -1,9 +1,12 @@
+import { SubGrupo } from "../sub-grupo/subGrupo";
 export class Grupo {
-  id:number = 0;
+  idgrupo:String= '';
+  // subgrupo:SubGrupo = new SubGrupo();
   descripcion:string = "";
   vidaUtil:number = 0;
-  codCuenta:string = "";
   estado:string = "";
   nroItems:number = 0;
-  creat_at:string = "";
+  fecha:Date = new Date();
+  fechacreacion:Date = new Date();
+  fechamodificacion:Date = new Date();
 }

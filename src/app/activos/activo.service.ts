@@ -30,7 +30,8 @@ export class ActivoService {
     return this.http.get<Activo>(this.urlEndPoint+"/"+id)
   }
 
-  delete(id:number): Observable<Activo>{
+  // delete(id:number): Observable<Activo>{
+  delete(id:string): Observable<Activo>{
     return this.http.delete<Activo>(this.urlEndPoint+"/"+id, {headers: this.httpHeaders})
   }
 

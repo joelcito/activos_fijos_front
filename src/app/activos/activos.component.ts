@@ -38,7 +38,10 @@ export class ActivosComponent {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.activoService.delete(activo.id).subscribe(
+        var id:string =  activo.idactivo.toString();
+
+        this.activoService.delete(id).subscribe(
+
           response =>{
 
             // para actualizar la lista
