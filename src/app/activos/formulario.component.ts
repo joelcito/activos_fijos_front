@@ -1,10 +1,10 @@
 import { Component, OnInit ,Input} from '@angular/core';
-import { ActivoService } from './activo.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 // import { OnInit } from '@angular/core';
 
 // SERVICES
+import { ActivoService } from './activo.service';
 import { GrupoService } from '../grupos/grupo.service';
 import { IncoporacionService } from '../incorporacion/incorporacion.service';
 import { SubGrupoService } from '../sub-grupo/subGrupo.service';

@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'; // add this import
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -56,6 +58,8 @@ const routes: Routes = [
   {path: 'grupos', component:GruposComponent},
   {path: 'grupos/formulario', component:FormularioGrupoComponent},
   {path: 'grupos/formulario/:id', component:FormularioGrupoComponent},
+  {path: 'grupos/subgrupos/:id', component:SubGrupoComponent},
+  {path: 'grupos/componentes/:id', component:ComponenteComponent},
 
   // LOGIN
   {path: 'login', component:LoginComponent},
@@ -89,7 +93,9 @@ const routes: Routes = [
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    // CommonModule
+    CommonModule
   ],
   providers: [
     ClienteService,
@@ -98,3 +104,4 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
